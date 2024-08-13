@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Money Money Money </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    /* Highlight visited URLs with a subtle blue background */
+    tr:nth-child(even) td:first-child a:visited {
+      background-color: #eee;
+    }
+
+    /* Style the select dropdown */
+    select {
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+
+    /* Button Styles */
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      float: right; /* Align button to the right */
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1> URLs </h1>
+  <table id="checklistTable">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="https://station-test.side.one/faucet" target="_blank"> side faucet</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://insider.side.one/profiling" target="_blank">insider.side.one</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://miles.plumenetwork.xyz/" target="_blank">plumenetwork</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://elys.bonusblock.io/explore" target="_blank">elys bonusblock</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://mission.swanchain.io/" target="_blank">swanchain</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://rivalz.ai/dashboard" target="_blank">rivalz.ai Node dashboard</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://www.swisstronik.com/testnet2/dashboard" target="_blank">swisstronik Node/dashboard</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://build.assisterr.ai/" target="_blank">assisterr Bot/</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://app-olympia.atleta.network/" target="_blank">atleta network/</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="https://app.testnet.initia.xyz/xp" target="_blank">initia</a></td>
+                <td class="center">
+                    <select>
+                        <option value="Success">Success</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  <br>
+  <button onclick="downloadCSV()">Download CSV</button>
+
+  <script>
+    function downloadCSV() {
+      const table = document.getElementById('checklistTable');
+      const rows = table.querySelectorAll('tr');
+      let csvContent = "data:text/csv;charset=utf-8,";
+
+      rows.forEach(row => {
+        const cols = row.querySelectorAll('td, th');
+        const rowData = [];
+        cols.forEach(col => {
+          if (col.querySelector('select')) {
+            rowData.push(col.querySelector('select').value);
+          } else {
+            rowData.push(col.innerText);
+          }
+        });
+        csvContent += rowData.join(",") + "\r\n";
+      });
+
+      // Generate a timestamp for the filename
+      const now = new Date();
+      const timestamp = now.toISOString().slice(0, 10) + '-' + now.getHours() + '-' + now.getMinutes() + '-' + now.getSeconds();
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "daily_checklist-" + timestamp + ".csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
